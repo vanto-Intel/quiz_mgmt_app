@@ -1,0 +1,27 @@
+{% extends 'admin.html' %}
+
+{% block content %}
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <p_alert class="p_alert">{{ message }}</p_alert>
+        </div>
+    {% endfor %}
+<form method="post">
+    <div class="form-group">
+        <label for="cat_name">Name</label>
+        <input type="text" name="cat_name" placeholder="Category name"
+               class="form-control"
+               value="{{ request.form['cat_name'] or cat['cat_name'] }}">
+        </input>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea name="cat_des" placeholder="Category description"
+                  class="form-control">{{ request.form['cat_des'] or cat['cat_des'] }}</textarea>
+    </div>
+    <div class="form-group">
+        <label ></label>
+        <button class="button" type="submit">Update</button>
+    </div>
+</form>
+{% endblock %}

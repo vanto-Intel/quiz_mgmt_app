@@ -1,0 +1,97 @@
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flask Auth Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+</head>
+
+<body>
+    <section class="hero is-primary is-fullheight">
+
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+                    <div id="navbarMenuHeroA" class="navbar-menu">
+                        <div class="navbar-end">
+                            <a href="{{ url_for('main.index') }}" class="navbar-item">
+                                Home
+                            </a>
+                            {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('main.profile') }}" class="navbar-item">
+                                Profile
+                            </a>
+                            {% endif %}
+                            {% if not current_user.is_authenticated %}
+                            <a href="{{ url_for('auth.login') }}" class="navbar-item">
+                                Login
+                            </a>
+                            <a href="{{ url_for('auth.signup') }}" class="navbar-item">
+                                Sign Up
+                            </a>
+                            {% endif %}
+                            {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('auth.logout') }}" class="navbar-item">
+                                Logout
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="hero-body">
+            <div class="container has-text-centered">
+              
+            </div>
+        </div>
+    </section>
+</body>
+
+</html> -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename= 'css/style.css') }}" />
+<title>Quizzes Management System|By Van To CS361 OSU</title>
+</head>
+
+<body>
+<div id="container">
+		<div id="mainpic"></div>   
+        <div id="menu">
+        	<ul>
+            	<li class="menuitem"><a href="{{url_for('main.home')}}">Home</a></li>
+                <li class="menuitem"><a href="{{url_for('main.about')}}">About</a></li>
+                <li class="menuitem"><a href="{{url_for('main.contact')}}">Contact</a></li>
+                <li class="menuitem"><a href=""></a></li>
+                {% if not current_user.is_authenticated %}
+                <li class="menuitem"><a href="{{ url_for('auth.login') }}">
+                        Login
+                    </a></li>
+                <li class="menuitem"><a href="{{ url_for('auth.signup') }}">
+                        Sign Up
+                    </a></li>
+                {% endif %}
+                {% if current_user.is_authenticated %}
+                    <li class="menuitem"></li><a href="{{ url_for('auth.logout') }}">
+                        Logout
+                    </a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="row" id="content">
+            {% block content %} {% endblock %}
+        </div>
+   </div>
+   <div class="row" id="content">
+        <div id="footer"><p>&#169; Designed by Van To CS361 OSU</p></div>  
+   </div>
+</body>
+</html>
