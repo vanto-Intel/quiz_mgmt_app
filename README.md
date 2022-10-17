@@ -33,3 +33,19 @@ new web structure for quiz_app
     working with Sqlalchemy: https://www.section.io/engineering-education/flask-database-integration-with-sqlalchemy/
 
 4. Webservice
+
+
+5. Project structure
+--auth--(virtual environment)
+--instance--
+    |-db.sqlite (database)
+--project--
+    |-static
+    |    |-css
+    |    |  |-style.css (css file that is used for the whole application)
+    |    |-images
+    |-templates
+    |__init__.py (initialize the system variable, database)
+    |-auth.py (used to manage login authentication)
+    |-main.py (used to manage the navigation in the system)
+    |-models.py (used to map the object with the database)

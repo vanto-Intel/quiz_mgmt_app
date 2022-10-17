@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename= 'css/style.css') }}" />
-<title>NightBeach | florida web design</title>
+<title>Quizzes management|Create by Van To CS361</title>
 </head>
 
 <body>
@@ -24,7 +24,15 @@
             </ul>
         </div>
         <div class="row" id="content">
-            {% block content %} This is admin page{% endblock %}
+            {% block content %} 
+            <h2> This is admin page, now you can easily manage these content below </h2>
+            <br>
+            <p style="background-color: #cc4c;">All Users of the system</p> 
+            <br>
+            <p style="background-color: #cc4c;">categories of the system</p> 
+            <br>
+            <p style="background-color: #cc4c;">All Role of the system</p>
+            {% endblock %}
         </div>
    </div>
    <div class="row" id="content">
