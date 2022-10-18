@@ -9,7 +9,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(1000))
 
 class Category(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy 
     cat_name = db.Column(db.String(100), unique=True, nullable=False)
     cat_des = db.Column(db.String(2000))
     

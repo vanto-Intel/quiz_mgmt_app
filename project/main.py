@@ -108,3 +108,10 @@ def user():
     #find all the categories in the system
     users = User.query.all()
     return render_template('user.html', users = users)
+
+@main.route('/role')
+@login_required
+def role():
+    #find all the categories in the system
+    users = User.query.all()
+    return render_template('user.html', users = users)

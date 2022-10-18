@@ -13,8 +13,9 @@
         <div id="menu">
         	<ul>
             	<li class="menuitem"><a href="{{url_for('main.home')}}">Home</a></li>
+                <li class="menuitem"><a href="{{url_for('main.role')}}">Role</a></li>
                 <li class="menuitem"><a href="{{url_for('main.category')}}">Category</a></li>
-                <li class="menuitem"><a href="{{url_for('main.user')}}">User</a></li> 
+                <li class="menuitem"><a href="{{url_for('main.user')}}">User</a></li>  
                 <li class="menuitem"><a href="#"></a></li>
                 {% if current_user.is_authenticated %}
                     <li class="menuitem"></li><a href="{{ url_for('auth.logout') }}">
