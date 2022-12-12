@@ -4,7 +4,7 @@ from flask_login import login_required, current_user
 
 from project.auth import login
 from . import db
-from .models import Category, User
+from .models import Category, User, Question
 
 main = Blueprint('main', __name__)
 
@@ -16,10 +16,10 @@ def index():
 def home():
     return render_template('index.html')
 
-@main.route('/profile')
+@main.route('/profile/<city>/<temp>')
 @login_required
-def profile():
-    return render_template('profile.html', name=current_user.name)
+def profile(city, temp):
+    return render_template('profile.html', name=current_user.name, city=city, temp=temp)
 
 @main.route('/about')
 def about():
@@ -29,9 +29,14 @@ def about():
 def contact():
     return render_template('contact.html')
 
+@main.route('/admin/<city>/<temp>')
+@login_required
+def admin(city, temp):
+    return render_template('admin.html', name=current_user.name, city=city, temp=temp)
+
 @main.route('/admin')
 @login_required
-def admin():
+def admin_origin():
     return render_template('admin.html', name=current_user.name)
 
 #category management page
@@ -115,3 +120,67 @@ def role():
     #find all the categories in the system
     users = User.query.all()
     return render_template('user.html', users = users)
+
+@main.route('/configure')
+@login_required
+def configure():
+    return render_template('configure.html')
+
+#------------------Manage member-----------------
+@main.route('/quiz/<city>/<temp>')
+@login_required
+def quiz(city, temp):
+    #find all the categories in the system
+    cats = Category.query.all()
+    return render_template('quiz.html', name=current_user.name, city=city, temp=temp, cats = cats)
+
+@main.route('/member/<city>/<temp>')
+@login_required
+def member(city, temp):
+    #find all the categories in the system
+    return render_template('member.html', name=current_user.name, city=city, temp=temp)
+
+#select question of a category
+@main.route('/search_quiz', methods=['POST', 'GET'])
+@login_required
+def search_quiz():
+    city = request.form.get('city')
+    #print('city '+str(city))
+    temp = request.form.get('temp')
+    #print('temp '+ str(temp))
+    cat_id = request.form.get('cat_id')
+    #print('cat id '+cat_id)
+    isBack = request.form.get('back')
+    print('is back '+str(isBack))
+    questions = db.session.query(Question).where(Question.cat_id==cat_id).all()
+    if not questions:
+        flash('No question for this category yet!')
+    return render_template('do_quiz.html', name=current_user.name, 
+            questions=questions, cat_id=cat_id, city=city, temp=temp)
+
+#member submit quizes
+@main.route('/do_quiz', methods=['POST'])
+@login_required
+def do_quiz():
+    city = request.form.get('city')
+    #print('city '+str(city))
+    
+    temp = request.form.get('temp')
+    #print('temp '+ str(temp))
+    cat_id = request.form.get('catid')
+    questions = db.session.query(Question).where(Question.cat_id==cat_id).all()
+    point = 0
+    isWorked = False #to check if member does not work on any answer (Fasle) otherwise (True)
+    if questions:
+        for ques in questions:#get all the question based on a specific category
+            ans_value = request.form.get(str(ques.question_id))#get answer by user
+            if ans_value:
+                isWorked = True
+                for ans in ques.answer:
+                    if int(ans_value) == ans.ans_id and ans.is_correct == True:
+                        point += 1
+    if isWorked == False:
+        flash('you have not answered any question yet')
+    else:
+        flash('you have '+ str(point) + ' answer(s) right')
+    return render_template('result.html', name=current_user.name, city=city, temp=temp)     

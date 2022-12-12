@@ -1,7 +1,82 @@
-{% extends "base.html" %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename= 'css/style.css') }}" />
+<title>Quizzes management|Create by Van To CS361</title>
+</head>
+<script>
+    function backButton() {
+    window.history.back();
+    }
+    
+</script>
+<body>
+<div id="container">
+		<div id="mainpic"></div>   
+        
+        <div id="menu">
+        	<ul>
+            	<!-- <li class="menuitem"><a href="{{url_for('main.home')}}">Home</a></li>
+                <li class="menuitem"><a href="{{url_for('main.about')}}">About</a></li>
+                <li class="menuitem"><a href="{{url_for('main.contact')}}">Contact</a></li> -->
+                <div class="menuitem">
+                    <button onclick="myFunction()" class="dropbtn">Members</button>
+                    <div id="myDropdown" class="dropdown-content">
+                      <a href="{{url_for('main.home')}}">Home</a>
+                      <a href="{{url_for('main.about')}}">About</a>
+                      <a href="{{url_for('main.contact')}}">Contact</a>
+                      <li class="menuitem"><a href="{{url_for('main.quiz', city=city, temp=temp)}}">Quizzes</a></li>
+                    </div>
+                    <button onclick="myFunction1()" class="dropbtn">Profiles</button>
+                    <div id="myDropdown1" class="dropdown-content">
+                      <a href="{{url_for('main.profile', city=city, temp=temp)}}">Profile</a>
+                      {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('auth.logout') }}">Logout</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </ul>
+        </div>
+        <div class="row" id="content">
+            Welcome {{city}} <br>
+            Your temperature {{temp}}
+            {% block content %} 
+            <h2> Configure your profile, you need to read and take your responsibility on what you change in your profile </h2>
+            <br>
+            <p>You can update your personal information</p>
+            <br>
+            <p><button onclick="backButton()" class="button">Back</button></p>
+            {% endblock %}
+        </div>
+   </div>
+   <div class="row" id="content">
+        <div id="footer"><p>&#169; Designed by Van To CS361 OSU</p></div>  
+   </div>
+   <script>
+        /* When the user clicks on the button, 
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+        }
 
-{% block content %}
-<h1 class="title">
-  Welcome, {{ name}}!
-</h1>
-{% endblock %}
+        function myFunction1() {
+        document.getElementById("myDropdown1").classList.toggle("show");
+        }
+        
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+            }
+        }
+        }
+    </script>
+</body>
+</html>

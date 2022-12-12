@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename= 'css/style.css') }}" />
+<title>Quizzes management|Create by Van To CS361</title>
+</head>
+<script>
+    function backButton() {
+    window.history.back();
+    }
+    
+</script>
+<body>
+<div id="container">
+		<div id="mainpic"></div>   
+        
+        <div id="menu">
+        	<ul>
+            	<li class="menuitem"><a href="{{url_for('main.home')}}">Home</a></li>
+                <li class="menuitem"><a href="{{url_for('main.role')}}">Role</a></li>
+                <li class="menuitem"><a href="{{url_for('main.category')}}">Category</a></li>
+                <li class="menuitem"><a href="{{url_for('main.user')}}">User</a></li>  
+                <li class="menuitem"><a href="#"></a></li>
+                {% if current_user.is_authenticated %}
+                    <li class="menuitem"></li><a href="{{ url_for('auth.logout') }}">
+                        Logout
+                    </a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="row" id="content">
+            {% block content %} 
+            <h2> Configure your system, it requires you are an admin and know more about the database and table relationship </h2>
+            <br>
+            <p>By change the setting such as connection pool of the database and threshold of number http requests. You can make your system response faster</p>
+            <br>
+            <p><button onclick="backButton()" class="button">Back</button></p>
+            {% endblock %}
+        </div>
+   </div>
+   <div class="row" id="content">
+        <div id="footer"><p>&#169; Designed by Van To CS361 OSU</p></div>  
+   </div>
+</body>
+</html>

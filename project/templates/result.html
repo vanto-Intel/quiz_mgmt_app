@@ -1,0 +1,16 @@
+{% extends "member.html" %}
+{% block content %}
+{% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <p_alert class="p_alert">{{ message }}</p_alert>
+        </div>
+    {% endfor %}
+<div class="row" id="content">
+   
+        <div class="form-group">
+            <label ></label>
+            <a href="{{url_for('main.quiz', city=city, temp=temp)}}">Back</a>
+        </div>
+    
+    {% endblock %}
+</div>

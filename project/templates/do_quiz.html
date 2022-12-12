@@ -1,0 +1,36 @@
+{% extends "member.html" %}
+{% block content %}
+    {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <p_alert class="p_alert">{{ message }}</p_alert>
+            </div>
+    {% endfor %}
+    <div class="row" id="content">
+        <form method="post" action="/do_quiz">
+            <input type="hidden" name="catid" value="{{cat_id}}"></input>
+            <input type="hidden" name="city" value="{{city}}"></input>
+            <input type="hidden" name="temp" value="{{temp}}"></input>
+            {% set noQuestion = namespace (count = 0) %}
+            {% for ques in questions %}
+                {% set noQuestion.count = noQuestion.count + 1%}
+                <div class="myQuestion">
+                    Question {{ noQuestion.count}}
+                    <br>
+                    {{ques.question_name}}
+                    <br>
+                    {% for ans in ques.answer %}
+                        <input type="radio" name="{{ques.question_id}}" value="{{ans.ans_id}}"> {{ans.content}} </input>
+                        <br>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <label ></label>
+                <button class="button" type="submit">Submit</button>
+                <a href="{{url_for('main.quiz', city=city, temp=temp)}}">Back</a>
+            </div>
+        </form>
+        
+    </div>
+    
+{% endblock %}
