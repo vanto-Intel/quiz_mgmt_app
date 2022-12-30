@@ -1,11 +1,14 @@
 #from msilib.schema import AdminExecuteSequence
 import re
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user
 from .models import User
 from . import db
 from .send_zip import SendZipClient
+from sqlalchemy.orm import scoped_session
+
+from .models import Category, User, Question, UserCat
 
 #print ('city name: %s and temperature: %s' %(city, temperature))
 
@@ -69,6 +72,17 @@ def login_post():
         return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
 
     # if the above check passes, then we know the user has the right credentials
+    categories = Category.query.join(UserCat).join(User).filter(User.id==user.id).all()
+
+    # access the results for each category
+    # for category in categories:
+    #     for user_cat in category.user_cat:
+    #         if user_cat.user_id == user.id:
+    #             result = user_cat.result
+    #             print(f'Category: {category.cat_name}, Result: {result}')
+
+    #session here
+    session['user_id'] = user.id 
     login_user(user, remember=remember)
     if user.name == 'admin':
         return redirect(url_for('main.admin', city=city, temp=temperature))

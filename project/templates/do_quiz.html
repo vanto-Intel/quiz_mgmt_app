@@ -16,12 +16,12 @@
                 <br />
                 <div class="myQuestion">
                     Question {{ noQuestion.count}}
-                    <br>
+                    <br />
                     {{ques.question_name}}
-                    <br>
+                    <br />
                     {% for ans in ques.answer %}
                         <input type="radio" name="{{ques.question_id}}" value="{{ans.ans_id}}"> {{ans.content}} </input>
-                        <br>
+                        <br />
                     {% endfor %}
                 </div>
             {% endfor %}

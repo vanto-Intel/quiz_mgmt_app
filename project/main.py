@@ -1,10 +1,10 @@
 from unicodedata import name
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session
 from flask_login import login_required, current_user
 
 from project.auth import login
 from . import db
-from .models import Category, User, Question
+from .models import Category, User, Question, UserCat
 
 main = Blueprint('main', __name__)
 
@@ -183,4 +183,12 @@ def do_quiz():
         flash('you have not answered any question yet')
     else:
         flash('you have '+ str(point) + ' answer(s) right')
+        #user = db.session.get('user')
+        id = session.get('user_id')
+        user = User(id=id)
+        category = Category(id=cat_id)
+        user.category = [category]
+        user_cat = UserCat(user_id=id, category_id=cat_id, result=point)
+        db.session.add(user_cat)
+        db.session.commit()
     return render_template('result.html', name=current_user.name, city=city, temp=temp)     
